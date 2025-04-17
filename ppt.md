@@ -157,127 +157,72 @@ Here is a potential slide-by-slide structure and content outline. I've focused o
 
 ---
 
-**Slide 11: Validation - Synthetic Test 1: Simple Model**
-
-*   **Headline:** Does it Work? Testing on a Known Structure
-*   **Purpose:** Verify the method and the μ estimation on a simple, controlled case.
-*   **Setup (Figure 4):**
-    *   Simulated continental-to-oceanic Moho transition (known true depths).
-    *   Known Δρ, z_ref.
-    *   Generate synthetic gravity data, add realistic noise.
-*   **Results (Figure 5):**
-    *   Cross-validation successfully identifies an optimal μ (Fig 5e).
-    *   Inverted Moho (Fig 5a) is smooth and recovers the main trend well.
-    *   Residuals (difference between true and estimated Moho, Fig 5b; difference between observed and predicted gravity, Fig 5c, 5d) are small and well-behaved.
-    *   **Computational Time (Table 1):** Confirms efficiency - >99% of time spent on forward modeling (calculating tesseroid gravity), <0.1% on solving the sparse linear system.
-*   **Conclusion:** The method is efficient, stable (due to regularization), and μ estimation works.
+Okay, here's a condensed 4-slide version focusing on the core validation, application, results, and conclusions. This assumes you've already covered the introduction and methodology.
 
 ---
 
-**Slide 12: Validation - Synthetic Test 2: Realistic Model (CRUST1.0)**
+**Slide 1: Validation - Method Proven on Synthetic Data**
 
-*   **Headline:** Testing on a More Complex, Realistic Scenario
-*   **Purpose:** Test the full hyperparameter estimation (μ, Δρ, z_ref) on a complex model derived from South America's CRUST1.0.
-*   **Setup (Figure 6):**
-    *   Realistic Moho geometry (Fig 6a).
-    *   Generate synthetic gravity (Fig 6b) and "seismic" Moho point data (Fig 6c). Add noise.
-*   **Results (Figure 7):**
-    *   Cross-validation finds optimal μ (Fig 7a).
-    *   Validation grid search finds optimal Δρ and z_ref, matching the true values (Fig 7b).
-    *   Recovered Moho (Fig 7c) captures large-scale features.
-    *   Larger residuals (Fig 7d, g, h) occur where the true Moho has sharp changes (e.g., Andes), indicating limitations of smoothness regularization for very sharp features.
-*   **Conclusion:** The full hyperparameter estimation pipeline works. The method recovers realistic structures but smooths sharp gradients.
+*   **Headline:** Method Validation: Efficient, Stable & Accurate
+*   **Purpose:** Tested the inversion's efficiency, stability (regularization), and hyperparameter estimation (μ, Δρ, z_ref) using known synthetic models.
+*   **Tests Conducted:**
+    *   **Simple Model (Fig 4, 5):** Smooth continental-oceanic transition.
+    *   **Realistic Model (CRUST1.0 South America - Fig 6, 7):** Complex known geometry.
+*   **Key Validation Findings:**
+    *   **Recovers Structure:** Inverted Moho matches known synthetic structures well (smoothly). (See Fig 5a, 7c)
+    *   **Hyperparameter Estimation Works:**
+        *   Cross-validation reliably finds optimal regularization μ (Fig 5e, 7a).
+        *   Validation with synthetic seismic points correctly identifies true Δρ & z_ref (Fig 7b).
+    *   **Highly Efficient:** >99% time spent on necessary forward modeling (tesseroids), <0.1% on solving the sparse system (Table 1).
+    *   **Known Limitation:** Smoothness regularization struggles to perfectly replicate very sharp Moho changes (e.g., synthetic Andes - Fig 7d residuals).
+*   **Conclusion:** The method and hyperparameter pipeline are robust and computationally feasible for large-scale problems.
 
----
-
-**Slide 13: Application - The South American Moho**
-
-*   **Headline:** Mapping the Real Earth - South America
-*   **Data Sources:**
-    *   Gravity: GOCO5S satellite model (processed to sediment-free Bouguer disturbance - Figure 8, 9a).
-    *   Seismic Moho Depths: Compiled dataset from Assumpção et al. (2013) (Figure 9b) - used for validation (Δρ, z_ref estimation).
-*   **Inversion Process:**
-    *   Run cross-validation to find optimal μ (Figure 10a). Value suggests very little regularization needed for this dataset.
-    *   Run validation grid search using seismic data to find optimal Δρ and z_ref (Figure 10b). Finds Δρ ≈ 400 kg/m³, z_ref ≈ 35 km.
-*   **Visual:** Show the final input gravity map (Fig 9a) and the seismic data points (Fig 9b). Show the hyperparameter estimation results (Fig 10).
+**(Visuals: Show key panels like Fig 5a, Fig 7b, Fig 7c, maybe Fig 5e/7a)**
 
 ---
 
-**Slide 14: Results - The South American Moho Model**
+**Slide 2: Application - Mapping the South American Moho**
 
-*   **Headline:** A New View of South America's Foundation
-*   **The Final Model (Figure 11):**
-    *   Show the color map of the estimated Moho depth.
-    *   **Key Features:**
-        *   Deep Moho under the Andes (> 60-70 km).
-        *   Shallow Moho in oceanic regions (10-20 km).
-        *   Relatively deep Moho under ancient shield areas (Brazilian, Guyana > 35-40 km).
-        *   Shallower Moho (< 35 km) in major basins (Amazonas, Paraná, Chaco) and Andean foreland.
-    *   **Comparison:** Generally consistent with previous large-scale models (e.g., GMSA12) but provides a high-resolution view based on this specific method.
-*   **Visual:** Feature Figure 11 prominently. Use arrows or annotations to point out key geographic/geologic regions mentioned.
+*   **Headline:** Applying the Validated Method to Real Data
+*   **Input Data:**
+    *   **Gravity:** GOCO5S satellite gravity, processed to isolate Moho signal (corrected for topography, bathymetry, sediments - Fig 9a).
+    *   **Seismic Control:** Moho depth estimates at specific points (Assumpção et al., 2013) used for validation only (Fig 9b).
+*   **Hyperparameter Estimation (Real Data):**
+    *   Optimal regularization μ found via cross-validation (Fig 10a).
+    *   Optimal Density Contrast (Δρ ≈ 400 kg/m³) & Reference Depth (z_ref ≈ 35 km) found by matching model to seismic points (Fig 10b).
+*   **The Result: South American Moho Depth Model**
+    *   **(Show Figure 11 prominently)**
+    *   **Major Features Visible:** Deep Andean roots (>60km), shallow oceanic Moho (~10-20km), deep shields (Brazilian, Guyana), shallower basins (Amazonas, Paraná, Chaco). Consistent with known large-scale geology.
 
----
-
-**Slide 15: Discussion - Model Fit & Interpretation**
-
-*   **Headline:** How Well Does it Fit? What Does it Mean?
-*   **Gravity Residuals (Figure 12a):**
-    *   Difference between observed and predicted gravity.
-    *   Smallest residuals in oceanic areas, Patagonia, central/eastern Brazil (good fit).
-    *   Largest residuals along the Andes (sharp gradients, unmodeled Nazca plate effect?) and basin margins.
-*   **Seismic Comparison (Figure 12b):**
-    *   Difference between model Moho and seismic Moho estimates.
-    *   Good agreement in many areas (oceans, Patagonia, parts of Brazil).
-    *   **Significant Discrepancies:**
-        *   Andes: Model likely smooths the very deep roots; subducting plate effect not included.
-        *   Amazonas/Paraná/Solimões Basins: Model predicts *shallower* Moho than seismology suggests. Implies an unmodeled *mass excess* in the real Earth (e.g., high-density lower crustal intrusions?).
-        *   Guyana Shield/Borborema Province: Differences suggest unaccounted crustal/mantle density variations or sediment model inaccuracies.
-*   **Visual:** Show Figure 12 panels, highlighting areas of good fit and large discrepancies.
+**(Visuals: Fig 9a (Input Gravity), Fig 10b (Validation Grid), Fig 11 (The Final Map))**
 
 ---
 
-**Slide 16: Conclusion & Significance**
+**Slide 3: Discussion - Model Fit & Geological Interpretation**
 
-*   **Headline:** Key Takeaways & Contributions
-*   **Summary:** Presented an efficient, regularized gravity inversion method using tesseroids in spherical coordinates.
+*   **Headline:** How Well Does the Model Fit? What Does it Tell Us?
+*   **Model Performance:**
+    *   **Gravity Fit (Fig 12a):** Generally good fit (low residuals) in stable regions (oceans, E. Brazil). Larger misfits along Andes (sharp gradients, unmodeled subducting plate effects).
+    *   **Seismic Fit (Fig 12b):** Good agreement in many areas, but significant discrepancies highlight geology/limitations:
+        *   **Andes:** Model likely smooths the sharpest features; missing plate effects.
+        *   **Basins (Amazon, Paraná etc.):** Model predicts *shallower* Moho than seismic indicates -> Suggests unmodeled **mass excess** in the crust/mantle (e.g., intrusions?) not accounted for in corrections.
+        *   **Shields/Provinces:** Misfits may point to inaccuracies in sediment corrections or lateral density variations in crust/mantle.
+*   **Key Insight:** Discrepancies between the gravity model and independent seismic data are valuable – they pinpoint areas where initial assumptions (like uniform density contrast or simple structure) might be insufficient and where complex geology likely exists.
+
+**(Visuals: Show Fig 12a and 12b, potentially highlighting key areas of discrepancy on the maps/histogram)**
+
+---
+
+**Slide 4: Conclusions & Significance**
+
+*   **Headline:** A Fast, Stable Method for Spherical Gravity Inversion
 *   **Key Achievements:**
-    *   Successfully combined Bott's method efficiency with Tikhonov stability and spherical accuracy.
-    *   Demonstrated robust hyperparameter estimation using cross-validation and independent seismic data.
-    *   Produced a new, detailed Moho depth map for South America.
-*   **Strengths:** Computationally efficient for large-scale problems, handles spherical geometry correctly, provides stable solutions.
-*   **Limitations:** Requires regular data grid, smoothness assumption struggles with very sharp features, results depend on accuracy of corrections (topo, sediments) and assumed density contrast model.
-*   **Significance:** Provides a powerful tool for regional/global crustal studies, especially leveraging modern satellite gravity data. Helps bridge the gap between sparse seismic data points.
+    *   Developed & validated an efficient method combining Bott's speed, Tikhonov stability, and Tesseroid accuracy for spherical gravity inversion.
+    *   Demonstrated robust data-driven hyperparameter estimation (μ, Δρ, z_ref).
+    *   Produced a new high-resolution Moho depth map for South America (Fig 11).
+*   **Strengths:** Computationally efficient for large datasets, inherently spherical, stable & regularized solutions.
+*   **Limitations:** Needs regular data grid, smooths sharp features, results depend on correction accuracy (topo, sediments).
+*   **Significance:** Powerful tool for regional/global crustal studies using modern satellite gravity, helps interpolate sparse seismic data, and identifies areas of complex subsurface density structure.
+*   **Open Science:** Method leverages open-source tools (Python, Fatiando a Terra); code/results shared by authors (Uieda & Barbosa, 2016).
 
----
-
-**Slide 17: Future Directions / Potential Improvements**
-
-*   **(Optional, but shows deeper thinking)**
-*   Incorporate gravity gradients (measured by GOCE).
-*   Use different regularization techniques (e.g., Total Variation for sharper features).
-*   Joint inversion with seismic or other geophysical data.
-*   Improve sediment and crustal density models used for corrections.
-*   Explore methods for spatially varying density contrast (Δρ).
-
----
-
-**Slide 18: Acknowledgements & Open Science**
-
-*   Acknowledge Uieda & Barbosa for the original work.
-*   **Highlight the Open-Source Aspect:** Mention the use of Python, SciPy, Fatiando a Terra. Emphasize that the authors made their code and results available (provide link if possible: <https://github.com/pinga-lab/paper-moho-inversion-tesseroids>). This is a major positive point!
-*   Acknowledge data providers (GOCO5S, ETOPO1, CRUST1.0, Assumpção et al.).
-
-
----
-
-**Tips for Delivering the "Best Presentation":**
-
-1.  **Understand, Don't Just Read:** Internalize the concepts. Why was each step necessary? What problem does it solve?
-2.  **Visuals are Key:** Use the figures effectively. Explain what they show. Don't clutter slides with too much text.
-3.  **Tell a Story:** Start with the problem (understanding the Moho), introduce the challenges, present the clever solution, show that it works (validation), and finally reveal the payoff (the SA Moho map and its implications).
-4.  **Highlight the Innovation:** Clearly explain *why* combining Bott's approximation with regularization and tesseroids is smart and efficient.
-5.  **Explain the Jargon:** Define terms like "tesseroid," "regularization," "hyperparameter," "cross-validation."
-6.  **Practice:** Rehearse the timing and transitions. Anticipate questions.
-7.  **Engage:** Make eye contact, use a clear voice, show enthusiasm for the science!
-
-This structure provides a comprehensive overview. Adapt the level of detail based on your audience and time limit. Good luck!
+**(Visuals: Maybe a small version of Fig 11, text summary, logos for Python/Fatiando a Terra if desired)**
